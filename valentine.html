@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💖</title>
+
+<style>
+    .side-photo{
+    position:absolute;
+    bottom:-30px; /* turun ke bawah */
+    width:220px;
+    height:500px;
+    object-fit:cover;
+    opacity:0.15;
+    z-index:1;
+    pointer-events:none;
+}
+    .side-photo.left{
+    left:-50px;
+    transform:rotate(-15deg);
+}
+
+    .side-photo.right{
+    right:-50px;
+    transform:rotate(15deg);
+}
+    .gif-love{
+    width:180px;
+    margin-top:20px;
+    border-radius:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+html,body{
+    margin:0;
+    padding:0;
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* ===== BACKGROUND ===== */
+body{
+    background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffd3a5);
+    background-size:400% 400%;
+    animation:bgMove 12s ease infinite;
+    min-height:100vh;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.section{
+    display:none;
+    min-height:100vh;
+    width:100%;
+    flex-direction:column;
+    align-items:center;
+    padding:60px 20px;
+    box-sizing:border-box;
+}
+
+.active{
+    display:flex;
+}
+
+/* ===== YES NO ===== */
+.btn-wrapper{
+    width:300px;
+    display:flex;
+    justify-content:space-between;
+    margin-top:30px;
+    position:relative;
+}
+
+button{
+    padding:12px 28px;
+    border:none;
+    border-radius:30px;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.yes{
+    background:#ff4d6d;
+    color:white;
+}
+
+.no{
+    background:#333;
+    color:white;
+    position:absolute;
+    right:0;
+}
+
+/* ===== GIFT ===== */
+.gift-container{
+    display:flex;
+    gap:100px;
+    margin-top:40px;
+}
+
+.gift{
+    font-size:95px;
+    cursor:pointer;
+    filter:drop-shadow(0 6px 15px rgba(0,0,0,0.4));
+    transition:0.3s;
+}
+
+.gift:hover{
+    transform:scale(1.1);
+}
+
+/* ===== RESULT ===== */
+#result{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    padding-top:80px;
+    padding-bottom:100px;
+    position:relative;
+}
+
+#result.active{
+    display:flex;
+}
+
+/* Background Icon */
+#bgAnimation{
+    position:absolute;
+    font-size:220px;
+    opacity:0.12;
+    top:250px;
+    left:50%;
+    transform:translateX(-50%);
+    pointer-events:none;
+}
+
+/* ===== PAPER ===== */
+#papers{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+    z-index:2;
+}
+
+.paper{
+    background:#fff8e7;
+    padding:25px;
+    width:95%;
+    min-height:100px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    font-size:14px;
+    line-height:1.6;
+    text-align:center;
+    animation:fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ===== SWITCH AREA ===== */
+.switch-wrapper{
+    margin-top:40px; /* lebih dekat ke paper */
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.switch-label{
+    color:white;
+    font-size:14px;
+    margin-bottom:10px;
+    text-shadow:0 2px 6px rgba(0,0,0,0.4);
+}
+
+.switch{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:38px;
+    cursor:pointer;
+    background:rgba(255,255,255,0.25);
+    backdrop-filter:blur(10px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* ===== ANIMATIONS ===== */
+.bloom{ animation:bloom 1.5s ease forwards; }
+@keyframes bloom{
+    from{transform:scale(0);}
+    to{transform:scale(1);}
+}
+
+.teddy{ animation:shake 1s infinite; }
+@keyframes shake{
+    0%{transform:rotate(0);}
+    25%{transform:rotate(5deg);}
+    50%{transform:rotate(0);}
+    75%{transform:rotate(-5deg);}
+    100%{transform:rotate(0);}
+}
+
+/* ===== LOVE ===== */
+.love{
+    position:fixed;
+    bottom:-20px;
+    font-size:20px;
+    animation:floatUp 5s linear forwards;
+    pointer-events:none;
+}
+
+@keyframes floatUp{
+    to{
+        transform:translateY(-110vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="start" class="section active">
+    <h1>Will you be my Valentine?💌</h1>
+
+
+    <img src="cinta.gif" class="gif-love">
+        
+    <div class="btn-wrapper">
+        <button class="yes" onclick="showGift()">Yes 🤍</button>
+        <button class="no" id="noBtn">No 🤔</button>
+    </div>
+</div>
+
+<div id="gift" class="section">
+    <h2>Select gift 🎁</h2>
+    <div class="gift-container">
+        <div class="gift" onclick="showFlower()">💐</div>
+        <div class="gift" onclick="showDoll()">🧸</div>
+    </div>
+</div>
+
+<div id="result" class="section">
+    <img src="left.jpg" class="side-photo left">
+    <img src="right.jpg" class="side-photo right">
+    <div id="bgAnimation"></div>
+    <div id="papers"></div>
+    <div id="switchArea"></div>
+</div>
+
+<script>
+const noBtn=document.getElementById("noBtn");
+
+function moveNo(){
+    let maxX = window.innerWidth - 120;
+    let maxY = window.innerHeight - 70;
+    noBtn.style.position="fixed";
+    noBtn.style.left=Math.random()*maxX+"px";
+    noBtn.style.top=Math.random()*maxY+"px";
+}
+noBtn.onclick=moveNo;
+noBtn.onmouseover=moveNo;
+
+function showGift(){
+    document.getElementById("start").classList.remove("active");
+    document.getElementById("gift").classList.add("active");
+}
+
+function showFlower(){ showResult("flower"); }
+function showDoll(){ showResult("doll"); }
+
+function showResult(type){
+    document.getElementById("gift").classList.remove("active");
+    document.getElementById("result").classList.add("active");
+
+    const bg=document.getElementById("bgAnimation");
+    const papers=document.getElementById("papers");
+    const switchArea=document.getElementById("switchArea");
+
+    bg.innerHTML="";
+    papers.innerHTML="";
+    switchArea.innerHTML="";
+
+    let wrapper=document.createElement("div");
+    wrapper.className="switch-wrapper";
+
+    let label=document.createElement("div");
+    label.className="switch-label";
+    label.innerText="another gift💗"; 
+
+    let icon=document.createElement("div");
+    icon.className="switch";
+
+    if(type==="flower"){
+        bg.innerHTML='<div class="bloom">💐🌹</div>';
+        createPapers([
+            "untukmu yang selalu indah dan membawa warna dalam hariku, jalani hari hari-mu dengan baik, kaloo capee, jangan lupa beristirahat, jangann memaksakaan semuanyaa, gaa haruss selaluu kuatt, istirahaat jugaa pentingg🌸",
+            "kalau hari kamu berat, ingat ya… kamu nggak sendirian, Aku selalu ada buat kamu, nayaa bisaa ceritaa apapuunn, jangan di pendaam sendirii, okeeyy? pastii akuu dengarkann dann, mungkinn akuu bisaa kasii solusii💐",
+            "happy valentine day, aku sepertinyaa beruntungg bisaa mengenalmuu, makasii sudaa datangg di hidupp akuu :3🌷"
+        ]);
+        icon.innerHTML="🧸";
+        icon.onclick=showDoll;
+    }else{
+        bg.innerHTML='<div class="teddy">🧸🤍</div>';
+        createPapers([
+            "emm, akuu gaa tauu mau ngomongg apaa, tapii intinyaa makasii, yaa, sudaa hadirr, dann, akuu mintaa maaaff kaloo akuu seringg melalukaann kesalahaan, seringg ingkarr janji, yangg membuatt nayaa marah, kesel, ngambekk, haha, tapii kaloo lagii gituu tuu, lucuu tauu, tapii seremm jugaa🧸",
+            "gaa kebayangg, kaloo akuu sudaa luluss, gaa bisaa ketemuu dongg, haha, tapii, masiihh tetepp chattann, kaannn?, yaaa, kalauu kitaa samaa samaa gaa sibukk, sii🤍",
+            "semoga setiap hari kamu selalu tersenyum dan penuh bahagia, samaa akuu adaa sesuatuu lagii, emm, tapii nantii di sekolahh dehh, mauu ngasihh... adalaahh, gapapaaaa? tapii gaa janjii benerann ngasihh, emm, sekalii lagii happy valentine day, akuu gaa pernahh ngerayainn yangg kayaa ginii, jadii inii first time, haha, kaloo gaa sukaa atauu risihh, bilangg ajaa, nantii akuu hapuss 💖"
+        ]);
+        icon.innerHTML="🌹";
+        icon.onclick=showFlower;
+    }
+
+    wrapper.appendChild(label);
+    wrapper.appendChild(icon);
+    switchArea.appendChild(wrapper);
+}
+
+function createPapers(messages){
+    const papers=document.getElementById("papers");
+    messages.forEach(msg=>{
+        let paper=document.createElement("div");
+        paper.className="paper";
+        paper.innerHTML=msg;
+        papers.appendChild(paper);
+    });
+}
+
+function createLove(){
+    let love=document.createElement("div");
+    love.className="love";
+    love.innerHTML="💖";
+    love.style.left=Math.random()*100+"%";
+    document.body.appendChild(love);
+    setTimeout(()=>love.remove(),5000);
+}
+setInterval(createLove,700);
+</script>
+<audio id="bgm" loop>
+    <source src="athousandyears.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const bgm = document.getElementById("bgm");
+
+function startMusicOnce(){
+    bgm.play().catch(()=>{});
+    document.removeEventListener("Yes🤍", startMusicOnce);
+}
+
+document.addEventListener("click", startMusicOnce);
+</script>
+</body>
+  </html>
